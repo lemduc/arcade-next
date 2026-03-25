@@ -101,7 +101,10 @@ arcade_next/
 │   ├── smells.py           # Smell detection: cycles (NetworkX) + LLM analysis
 │   ├── report.py           # Jinja2 HTML report with Mermaid.js diagrams
 │   └── llm.py              # Claude CLI wrapper (subprocess, mock mode)
-├── ARCADE_SELF_ANALYSIS.md # Results of analyzing ARCADE's own codebase
+├── examples/               # Example analysis results
+│   ├── ARCADE_SELF_ANALYSIS.md   # Self-analysis of ARCADE's own codebase
+│   ├── arcade_report.html        # Package-level recovery report
+│   └── arcade_report_ai.html     # AI-based recovery report
 └── README.md
 ```
 
@@ -135,6 +138,16 @@ arcade_next/
 | **Dependency Cycle** | NetworkX SCC (algorithmic) | Circular dependencies between components — prevents independent development and testing |
 | **Concern Overload** | Claude analysis | A component has too many unrelated responsibilities |
 | **Scattered Functionality** | Claude analysis | A single concern is spread across many unrelated components |
+
+## Examples
+
+We analyzed ARCADE's own codebase with ARCADE-Next. See the results:
+
+- **[Self-Analysis Write-up](examples/ARCADE_SELF_ANALYSIS.md)** — Detailed findings from running ARCADE-Next on ARCADE Core v1.2.0 (162 classes, 465 dependency edges, 2 HIGH-severity smells)
+- **[Package-Level Report](examples/arcade_report.html)** — HTML report using package-based clustering (deterministic, no LLM)
+- **[AI-Based Report](examples/arcade_report_ai.html)** — HTML report using Claude-powered semantic clustering
+
+Key findings: 6 of 10 recovered components are locked in a dependency cycle, and the utility module is a concern-overloaded dumping ground mixing JSON, graphs, CLI, and statistics. The tool designed to detect these smells has these exact smells.
 
 ## Limitations
 
